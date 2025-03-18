@@ -1,0 +1,25 @@
+{
+  "name": "time-line",
+  "version": "1.0.0",
+  "description": "the posts list",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Umka-dev/time-line.git"
+  },
+  "author": "Umka-dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Umka-dev/time-line/issues"
+  },
+  "homepage": "https://github.com/Umka-dev/time-line#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
