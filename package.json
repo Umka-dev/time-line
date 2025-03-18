@@ -4,7 +4,8 @@
   "description": "the posts list",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon script.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/Umka-dev/time-line#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.2"
   },
   "devDependencies": {
