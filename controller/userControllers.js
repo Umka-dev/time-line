@@ -1,3 +1,5 @@
+const postModel = require('../models/postModel');
+
 const homePage = (req, res) => {
   const dataObj = [
     {
@@ -16,12 +18,25 @@ const homePage = (req, res) => {
       name: 'John Doe',
       createdAt: '05-02-2025',
       message:
-        'This is my message    This is my message This is my message This is my messageThis is my message',
+        'This is my message This is my message This is my message This is my messageThis is my message',
     },
   ];
   res.render('homepage', {
     postList: dataObj,
   });
+};
+
+const addNewPost = (req, res) => {
+  let newPost = new postModel(req.body);
+  // console.log(newPost);
+  newPost
+    .save()
+    .then(() => {
+      console.log('Post was added');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const notFoundPage = (req, res) => {
@@ -30,5 +45,6 @@ const notFoundPage = (req, res) => {
 
 module.exports = {
   homePage,
+  addNewPost,
   notFoundPage,
 };

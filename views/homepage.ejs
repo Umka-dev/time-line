@@ -11,9 +11,22 @@
     </header>
     <!-- Main content section -->
     <main class="container flex-grow-1">
+      <div class="d-flex flex-column justify-content-center mb-5">
+        <form action="/add-new-post" method="POST">
+          <input name="name" type="text" placeholder="Author name" />
+          <input name="createdAt" type="text" placeholder="Date" />
+          <textarea
+            name="message"
+            placeholder="Message"
+            cols="45"
+            rows="3"
+          ></textarea>
+          <button>Add post</button>
+        </form>
+      </div>
+
       <ul class="list-unstyled">
-        <% if(postList.length > 0){ %> 
-        <% postList.forEach(post=>{ %>
+        <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
         <li class="mb-1">
           <span class="fw-bold"> <%= post.name %></span> - <%= post.createdAt %>
         </li>
@@ -23,15 +36,14 @@
             post.message %> <%= post.message %>
           </p>
         </li>
-        <% }) %>
-        <% } %>
+        <% }) %> <% } %>
       </ul>
     </main>
     <!-- Footer section -->
     <footer
       class="mt-auto d-flex flex-row justify-content-center align-items-center m-3"
     >
-       <%- include('footer') %>
+      <%- include('footer') %>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../public/script.js" defer></script>
