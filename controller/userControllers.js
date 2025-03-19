@@ -25,7 +25,7 @@ const homePage = (req, res) => {
 };
 
 const notFoundPage = (req, res) => {
-  res.send('404, Page not found!');
+  res.render('404page');
 };
 
 module.exports = {
