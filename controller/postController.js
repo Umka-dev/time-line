@@ -3,6 +3,7 @@ const postModel = require('../models/postModel');
 const homePage = (req, res) => {
   postModel
     .find()
+    .sort({ createdAt: -1 })
     .then((result) => {
       res.render('homepage', { postList: result });
     })

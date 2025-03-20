@@ -11,17 +11,35 @@
     </header>
     <!-- Main content section -->
     <main class="container flex-grow-1">
-      <div class="d-flex flex-column justify-content-center mb-5">
-        <form action="/add-new-post" method="POST">
-          <input name="name" type="text" placeholder="Author name" />
-          <input name="createdAt" type="text" placeholder="Date" />
+      <div class="d-flex flex-column align-items-center">
+        <form
+          action="/add-new-post"
+          method="POST"
+          class="d-flex flex-column justify-content-center mb-5"
+          style="max-width: 450px"
+        >
+          <label for="name">Name</label>
+          <input
+            name="name"
+            type="text"
+            placeholder="Input your name there..."
+            class="mb-3"
+            minlength="4"
+            maxlength="15"
+          />
+          <label for="createdAt">Created at</label>
+          <input name="createdAt" type="date" class="mb-3" />
+          <label for="message">Post a message</label>
           <textarea
             name="message"
-            placeholder="Message"
+            placeholder="Input your message there"
             cols="45"
             rows="3"
+            class="mb-3"
+            minlength="25"
+            maxlength="300"
           ></textarea>
-          <button>Add post</button>
+          <button class="btn btn-primary">Post a message</button>
         </form>
       </div>
 
@@ -31,10 +49,7 @@
           <span class="fw-bold"> <%= post.name %></span> - <%= post.createdAt %>
         </li>
         <li class="mb-4">
-          <p class="ms-4">
-            <%= post.message %> <%= post.message %> <%= post.message %> <%=
-            post.message %> <%= post.message %>
-          </p>
+          <p class="ms-4"><%= post.message %></p>
         </li>
         <% }) %> <% } %>
       </ul>
