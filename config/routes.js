@@ -1,10 +1,10 @@
 const express = require('express');
-const userController = require('../controller/userControllers');
+const postController = require('../controller/postController');
 const route = express.Router();
 
 // Routes
-route.get('/', userController.homePage);
-route.get('/*', userController.notFoundPage);
-route.post('/add-new-post', userController.addNewPost);
+route.get('/', postController.homePage);
+route.get('/*', postController.notFoundPage);
+route.post('/add-new-post', postController.addNewPost);
 
 module.exports = route;
