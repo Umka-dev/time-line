@@ -4,7 +4,7 @@ const routes = require('./config/routes');
 require('./config/mongoose');
 
 const app = express();
-const port = 3000;
+const port = 1200;
 
 app.use('/public', express.static('public'));
 app.set('view engine', 'ejs');
