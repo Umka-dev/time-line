@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('head') %>
+  <%- include('./partials/head') %>
   <body
     class="container-fluid d-flex flex-column justify-content-start min-vh-100 bg-light text-black"
     style="max-width: 900px"
@@ -40,11 +40,7 @@
       </ul>
     </main>
     <!-- Footer section -->
-    <footer
-      class="mt-auto d-flex flex-row justify-content-center align-items-center m-3"
-    >
-      <%- include('footer') %>
-    </footer>
+    <%- include('./partials/footer') %>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="../public/script.js" defer></script>
   </body>
