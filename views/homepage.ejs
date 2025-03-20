@@ -26,9 +26,10 @@
             class="mb-3"
             minlength="4"
             maxlength="15"
+            required
           />
           <label for="createdAt">Created at</label>
-          <input name="createdAt" type="date" class="mb-3" />
+          <input name="createdAt" type="date" class="mb-3" required />
           <label for="message">Post a message</label>
           <textarea
             name="message"
@@ -38,6 +39,7 @@
             class="mb-3"
             minlength="25"
             maxlength="300"
+            required
           ></textarea>
           <button class="btn btn-primary">Post a message</button>
         </form>
