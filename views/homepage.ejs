@@ -18,18 +18,44 @@
       <!-- Display posts -->
       <div>
         <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
-        <h2 class="fs-5 mb-1">
-          <span class="fw-bold"> <%= post.name %></span> - <%= post.createdAt %>
+        <h2 class="fs-5 mb-2">
+          <span class="fw-bold"> <%= post.name %></span> -
+          <span class="text-body-secondary fw-light"
+            ><%= new Date(post.createdAt).toLocaleDateString() %></span
+          >
         </h2>
         <div class="d-flex flex-row justify-content-between">
-          <p class="ms-4 me-4 mb-4"><%= post.message %></p>
+          <p class="ms-4 me-4 mb-3"><%= post.message %></p>
+          <!-- Delete button -->
           <form action="/delete/post/<%= post._id %>" method="POST">
             <button class="btn btn-danger me-2">Delete</button>
           </form>
+          <!-- Update button -->
           <form action="/update/post/<%= post._id %>" method="POST">
             <button class="btn btn-success">Edit</button>
           </form>
         </div>
+        <!-- Add a comment form -->
+        <form action="" method="POST" class="ms-4">
+          <div class="input-group mb-5">
+            <input
+              type="text"
+              name="comment"
+              id="comment"
+              class="form-control"
+              placeholder="Comment..."
+              aria-label="Comment"
+              aria-describedby="button-addon2"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+            >
+              Add comment
+            </button>
+          </div>
+        </form>
         <% }) %> <% } %>
       </div>
     </main>
