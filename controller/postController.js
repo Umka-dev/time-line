@@ -25,6 +25,18 @@ const addNewPost = (req, res) => {
     });
 };
 
+const deletePost = (req, res) => {
+  console.log('Deleting post with ID:', req.params.id);
+  postModel
+    .findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const notFoundPage = (req, res) => {
   res.render('404page');
 };
@@ -32,5 +44,6 @@ const notFoundPage = (req, res) => {
 module.exports = {
   homePage,
   addNewPost,
+  deletePost,
   notFoundPage,
 };

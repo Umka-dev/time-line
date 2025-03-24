@@ -1,0 +1,31 @@
+<form
+  action="/add-new-post"
+  method="POST"
+  class="d-flex flex-column justify-content-center mb-5"
+  style="max-width: 450px"
+>
+  <label for="name">Name</label>
+  <input
+    name="name"
+    type="text"
+    placeholder="Input your name there..."
+    class="mb-3"
+    minlength="4"
+    maxlength="15"
+    required
+  />
+  <label for="createdAt">Created at</label>
+  <input name="createdAt" type="date" class="mb-3" required />
+  <label for="message">Post a message</label>
+  <textarea
+    name="message"
+    placeholder="Input your message there"
+    cols="45"
+    rows="3"
+    class="mb-3"
+    minlength="25"
+    maxlength="300"
+    required
+  ></textarea>
+  <button class="btn btn-primary">Post a message</button>
+</form>

@@ -6,5 +6,6 @@ const route = express.Router();
 route.get('/', postController.homePage);
 route.get('/*', postController.notFoundPage);
 route.post('/add-new-post', postController.addNewPost);
+route.post('/delete/post/:id', postController.deletePost);
 
 module.exports = route;
