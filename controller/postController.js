@@ -37,6 +37,32 @@ const deletePost = (req, res) => {
     });
 };
 
+const updatePost = (req, res) => {
+  // console.log('Updating post with ID:', req.params.id);
+  // Get post info from DB
+  postModel
+    .findById(req.params.id)
+    .then((post) => {
+      res.render('edit-post-form', {
+        post,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const editPostForm = (req, res) => {
+  postModel
+    .findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const notFoundPage = (req, res) => {
   res.render('404page');
 };
@@ -45,5 +71,7 @@ module.exports = {
   homePage,
   addNewPost,
   deletePost,
+  updatePost,
+  editPostForm,
   notFoundPage,
 };

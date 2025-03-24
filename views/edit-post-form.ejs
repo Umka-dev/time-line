@@ -13,24 +13,7 @@
     <main class="container flex-grow-1">
       <div class="d-flex flex-column align-items-center">
         <!-- Create a new post form -->
-        <%- include('./partials/addPostForm') %>
-      </div>
-      <!-- Display posts -->
-      <div>
-        <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
-        <h2 class="fs-5 mb-1">
-          <span class="fw-bold"> <%= post.name %></span> - <%= post.createdAt %>
-        </h2>
-        <div class="d-flex flex-row justify-content-between">
-          <p class="ms-4 me-4 mb-4"><%= post.message %></p>
-          <form action="/delete/post/<%= post._id %>" method="POST">
-            <button class="btn btn-danger me-2">Delete</button>
-          </form>
-          <form action="/update/post/<%= post._id %>" method="POST">
-            <button class="btn btn-success">Edit</button>
-          </form>
-        </div>
-        <% }) %> <% } %>
+        <%- include('./partials/editPostForm') %>
       </div>
     </main>
     <!-- Footer section -->
