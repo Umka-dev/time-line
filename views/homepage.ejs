@@ -36,27 +36,8 @@
           </form>
         </div>
         <!-- Add a comment form -->
-        <form action="" method="POST" class="ms-4">
-          <div class="input-group mb-5">
-            <input
-              type="text"
-              name="comment"
-              id="comment"
-              class="form-control"
-              placeholder="Comment..."
-              aria-label="Comment"
-              aria-describedby="button-addon2"
-            />
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            >
-              Add comment
-            </button>
-          </div>
-        </form>
-        <% }) %> <% } %>
+        <%- include('./partials/addCommentForm', {post:post}) %> <% }) %> <% }
+        %>
       </div>
     </main>
     <!-- Footer section -->
