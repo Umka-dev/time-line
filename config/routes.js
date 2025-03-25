@@ -1,5 +1,6 @@
 const express = require('express');
 const postController = require('../controller/postController');
+const commentController = require('../controller/commentController');
 const route = express.Router();
 
 // Routes
@@ -10,12 +11,13 @@ route.post('/update/post/:postId', postController.updatePost);
 route.post('/edit-post-form/:postId', postController.editPostForm);
 
 // Comment routs
-route.post('/post/add/new-comment/:postId', postController.addComment);
+route.post('/post/add/new-comment/:postId', commentController.addComment);
 route.post(
   '/delete/post/comment/:commentId/:postId',
-  postController.deleteComment
+  commentController.deleteComment
 );
 
+//404 rout
 route.get('/*', postController.notFoundPage);
 
 module.exports = route;
