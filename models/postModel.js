@@ -18,6 +18,7 @@ const postSchema = new mongoose.Schema(
     },
     message: {
       type: String,
+      minlength: 25, // Minimum length
       required: true,
     },
   },

@@ -10,9 +10,8 @@
     type="text"
     placeholder="Input your name there..."
     class="mb-3"
-    minlength="4"
-    maxlength="15"
-    required
+    minlength="2"
+    maxlength="50"
   />
   <label for="message">Post a message</label>
   <textarea
@@ -21,9 +20,11 @@
     cols="45"
     rows="3"
     class="mb-3"
-    minlength="25"
-    maxlength="300"
-    required
   ></textarea>
+  <div class="d-flex flex-column justify-content-center">
+    <% if(errPostLength){%>
+    <p class="text-danger"><%= errPostLength %></p>
+    <% } %>
+  </div>
   <button class="btn btn-primary">Post a message</button>
 </form>

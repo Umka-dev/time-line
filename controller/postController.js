@@ -7,8 +7,11 @@ const homePage = (req, res) => {
     .sort({ createdAt: -1 })
     .populate('comments', '_id comment')
     .then((posts) => {
-      // console.log(result); // the list of posts
-      res.render('homepage', { postList: posts });
+      res.render('homepage', {
+        postList: posts,
+        errPostLength: null,
+        errCommentLength: null,
+      });
     })
     .catch((err) => {
       console.log('Error fetching posts:', err);
@@ -24,7 +27,22 @@ const addNewPost = (req, res) => {
       res.redirect('/');
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err.errors.message.kind);
+      if (err && err.errors.message.kind === 'minlength') {
+        postModel
+          .find()
+          .then((posts) => {
+            res.render('homepage', {
+              postList: posts,
+              errPostLength: 'Min length of the message should be over than 25',
+              errCommentLength: null,
+            });
+          })
+          .catch((err) => {
+            console.log('Error fetching posts:', err);
+            res.status(500).send('Internal Server Error');
+          });
+      }
     });
 };
 

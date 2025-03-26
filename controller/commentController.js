@@ -34,7 +34,23 @@ const addComment = (req, res) => {
           });
       })
       .catch((err) => {
-        console.log(err);
+        if (err && err.errors.comment.kind === 'minlength') {
+          postModel
+            .find()
+            .sort({ createdAt: -1 })
+            .populate('comments', '_id comment')
+            .then((posts) => {
+              res.render('homepage', {
+                postList: posts,
+                errPostLength: null,
+                errCommentLength: 'Min length should be over than 25',
+              });
+            })
+            .catch((err) => {
+              console.log('Error fetching posts:', err);
+              res.status(500).send('Internal Server Error');
+            });
+        }
       });
   }
 };

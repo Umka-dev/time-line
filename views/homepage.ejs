@@ -7,7 +7,11 @@
   >
     <!-- Header section -->
     <header class="d-flex flex-row align-items-center border-bottom mb-3">
-      <h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1>
+      <a
+        href="/"
+        class="link-dark link-offset-2 link-underline link-underline-opacity-0"
+        ><h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1></a
+      >
     </header>
     <!-- Main content section -->
     <main class="container flex-grow-1">
@@ -27,17 +31,19 @@
         <div class="d-flex flex-row justify-content-between">
           <p class="ms-4 me-4 mb-3"><%= post.message %></p>
           <!-- Delete button -->
-          <form action="/delete/post/<%= post._id %>" method="POST">
-            <button class="btn btn-danger me-2">Delete</button>
-          </form>
-          <!-- Update button -->
-          <form action="/update/post/<%= post._id %>" method="POST">
-            <button class="btn btn-success">Edit</button>
-          </form>
+          <div class="d-flex flex-row">
+            <form action="/delete/post/<%= post._id %>" method="POST">
+              <button class="btn btn-danger me-2">Delete</button>
+            </form>
+            <!-- Update button -->
+            <form action="/update/post/<%= post._id %>" method="POST">
+              <button class="btn btn-success">Edit</button>
+            </form>
+          </div>
         </div>
         <!-- Add a comment form -->
-        <%- include('./partials/addCommentForm', {post:post}) %> <% }) %> <% }
-        %>
+        <%- include('./partials/addCommentForm', {post:post,
+        err:errCommentLength}) %> <% }) %> <% } %>
       </div>
     </main>
     <!-- Footer section -->
