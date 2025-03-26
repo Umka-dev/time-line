@@ -19,6 +19,7 @@
         <!-- Create a new post form -->
         <%- include('./partials/addPostForm') %>
       </div>
+
       <!-- Display posts -->
       <div>
         <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
@@ -41,11 +42,16 @@
             </form>
           </div>
         </div>
+
+        <!-- Condition for displaying comment length error in the particular post -->
+        <% post.error = errCommentLength ? errCommentLength[post._id] : null; %>
+
         <!-- Add a comment form -->
-        <%- include('./partials/addCommentForm', {post:post,
-        err:errCommentLength}) %> <% }) %> <% } %>
+        <%- include('./partials/addCommentForm', {post: post}) %> <% }) %> <% }
+        %>
       </div>
     </main>
+
     <!-- Footer section -->
     <%- include('./partials/footer') %>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
