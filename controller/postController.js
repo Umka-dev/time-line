@@ -27,7 +27,6 @@ const addNewPost = (req, res) => {
       res.redirect('/');
     })
     .catch((err) => {
-      console.log(err.errors.message.kind);
       if (err && err.errors.message.kind === 'minlength') {
         postModel
           .find()
@@ -36,7 +35,7 @@ const addNewPost = (req, res) => {
           .then((posts) => {
             res.render('homepage', {
               postList: posts,
-              errPostLength: 'Min length of the message should be over than 25',
+              errPostLength: err.errors.message,
               errCommentLength: null,
             });
           })

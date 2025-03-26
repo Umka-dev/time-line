@@ -17,7 +17,7 @@ const postSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    minlength: 25, // Minimum length
+    minlength: [25, 'Min length of the message should be over than 25 symbols'], // Minimum length
     required: true,
   },
 });

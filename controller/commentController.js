@@ -40,8 +40,12 @@ const addComment = (req, res) => {
             .sort({ createdAt: -1 })
             .populate('comments', '_id comment')
             .then((posts) => {
+              console.log(
+                'err errors message:',
+                err.errors.comment.properties.message
+              );
               let errorMessages = {};
-              errorMessages[postId] = 'Min length should be over than 25';
+              errorMessages[postId] = err.errors.comment.properties.message;
               res.render('homepage', {
                 postList: posts,
                 errPostLength: null,
