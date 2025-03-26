@@ -27,10 +27,12 @@ const addNewPost = (req, res) => {
       res.redirect('/');
     })
     .catch((err) => {
-      // console.log(err.errors.message.kind);
+      console.log(err.errors.message.kind);
       if (err && err.errors.message.kind === 'minlength') {
         postModel
           .find()
+          .sort({ createdAt: -1 })
+          .populate('comments', '_id comment')
           .then((posts) => {
             res.render('homepage', {
               postList: posts,
