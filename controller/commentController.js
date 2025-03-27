@@ -40,10 +40,6 @@ const addComment = (req, res) => {
             .sort({ createdAt: -1 })
             .populate('comments', '_id comment')
             .then((posts) => {
-              console.log(
-                'err errors message:',
-                err.errors.comment.properties.message
-              );
               let errorMessages = {};
               errorMessages[postId] = err.errors.comment.properties.message;
               res.render('homepage', {
