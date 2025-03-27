@@ -1,7 +1,11 @@
 const express = require('express');
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController');
+const apiController = require('../controller/apiController');
 const route = express.Router();
+
+// API routes
+route.get('/api/greet', apiController.firstAPI);
 
 // Routes
 route.get('/', postController.homePage);

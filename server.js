@@ -1,17 +1,18 @@
-const express = require('express');
-const routes = require('./config/routes');
+const express = require('express'); // Import Express module
+const routes = require('./config/routes'); // Import Routes configuration
+require('./config/mongoose'); // Import Mongoose module
 
-require('./config/mongoose');
+const app = express(); // Define express app
 
-const app = express();
-const port = 3000;
+app.use('/public', express.static('public')); // Accept express to use public folder for the static frontend part
+app.set('view engine', 'ejs'); // Set ejs as a view engine
+app.use(express.urlencoded({ extended: true })); //Accept JSON in the request
+app.use(express.json()); // Accept express to use JSON in the response
 
-app.use('/public', express.static('public'));
-app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(routes); // Use routes defined in config/routes.js
 
-app.use(routes);
-app.listen(port, () =>
-  console.log(`Server is running on http://localhost:${port}`)
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () =>
+  console.log(`Server is running on http://localhost:${PORT}`)
 );
