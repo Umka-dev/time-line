@@ -19,8 +19,28 @@ const homePage = (req, res) => {
     });
 };
 
+const getPost = (req, res) => {
+  postModel
+    .findById(req.params.postId)
+    .populate('comments')
+    .then((post) => {
+      if (!post) {
+        return res.status(404).render('404page');
+      }
+      res.render('onePost', {
+        post: post,
+        errPostLength: null,
+        errCommentLength: null,
+      });
+    })
+    .catch((err) => {
+      console.error('Searching error:', err);
+      res.status(500).send('Internal Server Error');
+    });
+};
+
 const addNewPost = (req, res) => {
-  let newPost = new postModel(req.body);
+  const newPost = new postModel(req.body);
   newPost
     .save()
     .then(() => {
@@ -48,7 +68,7 @@ const addNewPost = (req, res) => {
 };
 
 const deletePost = (req, res) => {
-  let postId = req.params.postId;
+  const postId = req.params.postId;
   postModel
     .findByIdAndDelete(postId)
     .then(() => {
@@ -63,20 +83,7 @@ const deletePost = (req, res) => {
     });
 };
 
-const updatePost = (req, res) => {
-  // Get post info from DB
-  postModel
-    .findById(req.params.postId)
-    .then((post) => {
-      res.render('edit-post-form', {
-        post,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
+// Update Post By Id
 const editPostForm = (req, res) => {
   postModel
     .findByIdAndUpdate(req.params.postId, req.body)
@@ -94,9 +101,9 @@ const notFoundPage = (req, res) => {
 
 module.exports = {
   homePage,
+  getPost,
   addNewPost,
   deletePost,
-  updatePost,
   editPostForm,
   notFoundPage,
 };
