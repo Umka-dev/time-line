@@ -1,6 +1,7 @@
 const postModel = require('../models/postModel');
 const commentModel = require('../models/commentModel');
 
+//--------Operations with posts-------- //
 // GET a post by ID
 const getPost = (req, res) => {
   const postId = req.params.postId;
@@ -55,7 +56,7 @@ const deletePost = (req, res) => {
         res.status(204).send(); // 204 (No Content)
       });
     })
-    .catch((err) => {
+    .catch(() => {
       res.status(500).json({ error: { message: 'Internal Server Error' } });
     });
 };
@@ -76,10 +77,102 @@ const updatePost = (req, res) => {
     });
 };
 
+//--------Operations with comments-------- //
+// POST new comment
+const addComment = (req, res) => {
+  const postId = req.params.postId;
+
+  if (postId) {
+    const commentObj = {
+      ...req.body,
+      post: postId,
+    };
+
+    const newComment = new commentModel(commentObj);
+
+    newComment
+      .save() // Save a new comment
+      .then(() => {
+        // update post table to add the comment ID
+        postModel
+          .findById(postId) // looking for post by ID
+          .then((postInfo) => {
+            if (!postInfo) {
+              return res
+                .status(404)
+                .json({ error: { message: 'Post not found' } });
+            }
+            // Add new comment ID to comments array in found post
+            postInfo.comments.push(newComment._id);
+            // Save updated post in DB
+            postInfo
+              .save()
+              .then((updatedPost) => {
+                res.status(200).json({ post: updatedPost });
+              })
+              .catch((err) => {
+                res
+                  .status(500)
+                  .json({ error: { message: 'Error saving post' } });
+              });
+          })
+          .catch((err) => {
+            res
+              .status(500)
+              .json({ error: { message: 'Error while searching for post' } });
+          });
+      })
+      // Handle comment saving error
+      .catch((err) => {
+        if (err?.errors?.comment?.kind === 'minlength') {
+          return res.status(400).json({
+            error: { message: err.errors.comment.properties.message },
+          });
+        }
+        res.status(500).json({ error: { message: 'Error saving comment' } });
+      });
+  }
+};
+
+// DELETE a comment by ID
+const deleteComment = (req, res) => {
+  const { postId, commentId } = req.params;
+  // Find and delete comment by its ID
+  commentModel
+    .findByIdAndDelete(commentId)
+    .then((deletedComment) => {
+      if (!deletedComment) {
+        return res
+          .status(404)
+          .json({ error: { message: 'Comment not found' } });
+      }
+      // After successful deleting of comment update a post
+      return postModel.findById(postId);
+    })
+    .then((post) => {
+      if (!post) {
+        return res.status(404).json({ error: { message: 'Post not found' } });
+      }
+
+      // Delete comment Id from comments array in post
+      post.comments = post.comments.filter((id) => id.toString() !== commentId);
+
+      return post.save();
+    })
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(() => {
+      res.status(500).json({ error: { message: 'Internal Server Error' } });
+    });
+};
+
 module.exports = {
   getPost,
   getAllPosts,
   addNewPost,
   deletePost,
   updatePost,
+  addComment,
+  deleteComment,
 };

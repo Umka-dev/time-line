@@ -1,6 +1,6 @@
 const express = require('express'); // Import Express module
 const apiRoutes = require('./config/apiRoutes'); // Import API Routes configuration
-const routes = require('./config/routes'); // Import Routes configuration
+const publicRoutes = require('./config/publicRoutes'); // Import Routes configuration
 require('./config/mongoose'); // Import Mongoose module
 
 const app = express(); // Define express app
@@ -11,10 +11,10 @@ app.use(express.urlencoded({ extended: true })); //Accept JSON in the request
 app.use(express.json()); // Accept express to use JSON in the response
 
 // Use API routes defined in config/apiRoutes.js
-app.use(apiRoutes);
+app.use('/api', apiRoutes);
 
 // Use browser routes defined in config/routes.js
-app.use(routes);
+app.use('/', publicRoutes);
 
 // Start the server
 const PORT = 3000;
