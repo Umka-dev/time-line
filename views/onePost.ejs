@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head') %>
+  <body
+    class="container-fluid d-flex flex-column justify-content-start min-vh-100 bg-light text-black"
+    style="max-width: 900px"
+  >
+    <!-- Header section -->
+    <header class="d-flex flex-row align-items-center border-bottom mb-3">
+      <a
+        href="/"
+        class="link-dark link-offset-2 link-underline link-underline-opacity-0"
+        ><h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1></a
+      >
+    </header>
+    <!-- Main content section -->
+    <main class="container flex-grow-1">
+      <!-- Display posts -->
+      <div>
+        <% if(post){ %>
+        <h2 class="fs-5 mb-2">
+          <span class="fw-bold"> <%= post.name %></span> -
+          <span class="text-body-secondary fw-light"
+            ><%= new Date(post.createdAt).toLocaleDateString() %></span
+          >
+        </h2>
+        <div class="d-flex flex-row justify-content-between">
+          <p class="ms-4 me-4 mb-3"><%= post.message %></p>
+          <!-- Delete button -->
+          <div class="d-flex flex-row">
+            <form action="/delete/post/<%= post._id %>" method="POST">
+              <button class="btn btn-outline-danger me-2">Delete</button>
+            </form>
+            <!-- Update button -->
+            <form action="/update/post/<%= post._id %>" method="POST">
+              <button class="btn btn-outline-success">Edit</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Add a comment form -->
+        <%- include('./partials/addCommentForm', {post: post, postError:
+        postError}) %> <% } %>
+      </div>
+    </main>
+
+    <!-- Footer section -->
+    <%- include('./partials/footer') %>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../public/script.js" defer></script>
+  </body>
+</html>
