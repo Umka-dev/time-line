@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
   name: {
     type: String,
+    minlength: [2, 'Min length should be over than 1 symbol'],
     required: true,
   },
   comments: [
@@ -17,7 +18,7 @@ const postSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    minlength: [25, 'Min length of the message should be over than 25 symbols'], // Minimum length
+    minlength: [25, 'Min length of the message should be over than 24 symbols'],
     required: true,
   },
 });

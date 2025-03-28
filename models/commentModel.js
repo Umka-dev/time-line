@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const commentSchema = new mongoose.Schema({
   comment: {
     type: String,
-    minlength: [25, 'Min length of the comment should be over than 25 symbols'], // Minimum length
+    minlength: [25, 'Min length of the comment should be over than 24 symbols'], // Minimum length
     required: true,
   },
   post: {
