@@ -15,9 +15,11 @@
     </button>
   </div>
 </form>
+<!-- Condition for displaying comment length error in the particular post -->
+<% let postError = errCommentLength ? errCommentLength[post._id] : null; %>
 <div class="d-flex flex-column justify-content-center ms-4">
-  <% if (post.error) { %>
-  <p class="text-danger"><%= post.error %></p>
+  <% if (postError) { %>
+  <p class="text-danger"><%= postError %></p>
   <% } %>
 </div>
 <div class="d-flex flex-column justify-content-center mb-5">
