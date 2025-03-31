@@ -1,6 +1,8 @@
 const express = require('express');
+const userController = require('../controller/userController');
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController');
+
 const route = express.Router();
 
 // Routes
@@ -16,6 +18,10 @@ route.post(
   '/delete/post/comment/:commentId/:postId',
   commentController.deleteComment
 );
+
+// User routs
+route.get('/user/signup-login', userController.renderSignUpPage);
+route.post('/user/signup-login', userController.signUp);
 
 //404 rout
 route.get('/*', postController.notFoundPage);
