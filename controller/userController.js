@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const renderSignUpPage = (req, res) => {
   res.render('signUpLogIn', {
@@ -51,13 +52,26 @@ const logIn = async (req, res) => {
     // console.log(typeof existedUser.password[0]);
     const isCorrectPass = bcrypt.compareSync(
       req.body.password,
-      existedUser.password[0]
+      existedUser.password
     );
     if (isCorrectPass) {
-      console.log(existedUser);
+      //   console.log(existedUser);
       // User is allow to log in to the website
       // User is allow to go to the dashboard/home page
-      // AUTH JWT
+      // AUTH
+      // JWT
+      const userToken = await jwt.sign(
+        { user: existedUser },
+        'User is JWT now'
+      );
+      // How to make the token works?
+      // Send the token to our req/res => use cookie parser
+      //   console.log(userToken);
+      res.cookie('authToken', userToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      }); // register user token inside the cookie
+      res.redirect('/');
     } else {
       res.render('signUpLogIn', {
         signUpMessage: null,
@@ -78,4 +92,9 @@ const logIn = async (req, res) => {
 
 // Update user
 
-module.exports = { signUp, renderSignUpPage, logIn };
+const logOut = (req, res) => {
+  res.clearCookie('authToken');
+  res.redirect('/');
+};
+
+module.exports = { signUp, renderSignUpPage, logIn, logOut };

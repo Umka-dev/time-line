@@ -3,7 +3,10 @@ const apiRoutes = require('./config/apiRoutes'); // Import API Routes configurat
 const publicRoutes = require('./config/publicRoutes'); // Import Routes configuration
 require('./config/mongoose'); // Import Mongoose module
 
+const cookieParser = require('cookie-parser');
+
 const app = express(); // Define express app
+app.use(cookieParser());
 
 app.use('/public', express.static('public')); // Accept express to use public folder for the static frontend part
 app.set('view engine', 'ejs'); // Set ejs as a view engine
