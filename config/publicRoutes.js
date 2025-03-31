@@ -12,18 +12,19 @@ route.post('/add-new-post', postController.addNewPost);
 route.post('/delete/post/:postId', postController.deletePost);
 route.post('/edit-post-form/:postId', postController.editPostForm);
 
-// Comment routs
+// Comment routes
 route.post('/post/add/new-comment/:postId', commentController.addComment);
 route.post(
   '/delete/post/comment/:commentId/:postId',
   commentController.deleteComment
 );
 
-// User routs
+// User routes
 route.get('/user/signup-login', userController.renderSignUpPage);
 route.post('/user/signup-login', userController.signUp);
+route.post('/user/login', userController.logIn);
 
-//404 rout
+//404 route
 route.get('/*', postController.notFoundPage);
 
 module.exports = route;
