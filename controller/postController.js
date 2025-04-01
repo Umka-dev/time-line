@@ -40,7 +40,11 @@ const getPost = (req, res) => {
 };
 
 const addNewPost = (req, res) => {
-  const newPost = new postModel(req.body);
+  const userInfo = JSON.parse(req.cookies.userInfo);
+  if (!userInfo) {
+    res.redirect('/user/signup-login');
+  }
+  const newPost = new postModel({ ...req.body, user: userInfo.id });
   newPost
     .save()
     .then(() => {
@@ -65,6 +69,14 @@ const addNewPost = (req, res) => {
           });
       }
     });
+};
+
+const addNewPostForm = (req, res) => {
+  res.render('add-post-page', {
+    postList: null,
+    errPostLength: null,
+    errCommentLength: null,
+  });
 };
 
 const deletePost = (req, res) => {
@@ -103,6 +115,7 @@ module.exports = {
   homePage,
   getPost,
   addNewPost,
+  addNewPostForm,
   deletePost,
   editPostForm,
   notFoundPage,
