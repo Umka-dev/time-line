@@ -12,10 +12,15 @@ const renderSignUpPage = (req, res) => {
 
 const signUp = async (req, res) => {
   //check if req.body.email is empty or not!
-  if (req.body.email === '') {
-    console.log('The email should be filled!');
-    return;
-  }
+
+  // if (req.body.email === '' || req.body.password === '') {
+  //   return res.render('signup-login', {
+  //     signUpErrMessage: 'The email and password should be filled!',
+  //     signUpMessage: null,
+  //     noUserMessage: null,
+  //     wrongPassMessage: null,
+  //   });
+  // }
 
   // bcrypt/hash the password
   if (req.body.password !== '') {
@@ -30,6 +35,7 @@ const signUp = async (req, res) => {
       .save()
       .then((data) => {
         res.render('signup-login', {
+          // signUpErrMessage: null,
           signUpMessage: 'The user is signed up. You can log in now.',
           noUserMessage: null,
           wrongPassMessage: null,
@@ -48,8 +54,6 @@ const logIn = async (req, res) => {
 
   if (existedUser) {
     // Second: check if the password is correct
-    // console.log(typeof req.body.password);
-    // console.log(typeof existedUser.password[0]);
     const isCorrectPass = bcrypt.compareSync(
       req.body.password,
       existedUser.password
@@ -67,13 +71,11 @@ const logIn = async (req, res) => {
       // How to make the token works?
       // Send the token to our req/res => use cookie parser
       //   console.log(userToken);
-      res.cookie('authToken', userToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
-      }); // register user token inside the cookie
+      res.cookie('authToken', userToken, {}); // register user token inside the cookie
       res.redirect('/');
     } else {
       res.render('signup-login', {
+        // signUpErrMessage: null,
         signUpMessage: null,
         noUserMessage: null,
         wrongPassMessage: 'The password is not correct',
@@ -81,6 +83,7 @@ const logIn = async (req, res) => {
     }
   } else {
     res.render('signup-login', {
+      // signUpErrMessage: null,
       signUpMessage: null,
       noUserMessage: 'The user does not exist. Sign up first, please.',
       wrongPassMessage: null,
