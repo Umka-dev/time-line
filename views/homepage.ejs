@@ -15,13 +15,8 @@
           class="link-dark link-offset-2 link-underline link-underline-opacity-0"
           ><h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1></a
         >
-        <a
-          href="user/signup-login"
-          class="link-offset-2 link-underline link-underline-opacity-0"
-          ><h4>Sign Up | Log In</h4></a
-        >
         <form action="/logout" method="GET">
-          <button class="btn btn-outline-primary">Logout</button>
+          <button class="btn btn-dark">Logout</button>
         </form>
       </nav>
     </header>
@@ -35,12 +30,16 @@
       <!-- Display posts -->
       <div>
         <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
-        <h2 class="fs-5 mb-2">
-          <span class="fw-bold"> <%= post.name %></span> -
-          <span class="text-body-secondary fw-light"
-            ><%= new Date(post.createdAt).toLocaleDateString() %></span
-          >
-        </h2>
+        <a
+          href="/post/<%= post._id %>"
+          class="link-dark link-offset-2 link-underline link-underline-opacity-0"
+          ><h2 class="fs-5 mb-2">
+            <span class="fw-bold"> <%= post.name %></span> -
+            <span class="text-body-secondary fw-light"
+              ><%= new Date(post.createdAt).toLocaleDateString() %></span
+            >
+          </h2></a
+        >
         <div class="d-flex flex-row justify-content-between">
           <p class="ms-4 me-4 mb-3"><%= post.message %></p>
           <!-- Delete button -->

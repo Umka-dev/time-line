@@ -27,7 +27,7 @@ const getPost = (req, res) => {
       if (!post) {
         return res.status(404).render('404page');
       }
-      res.render('onePost', {
+      res.render('one-post-page', {
         post: post,
         errPostLength: null,
         errCommentLength: null,

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const renderSignUpPage = (req, res) => {
-  res.render('signUpLogIn', {
+  res.render('signup-login', {
     signUpMessage: null,
     noUserMessage: null,
     wrongPassMessage: null,
@@ -29,7 +29,7 @@ const signUp = async (req, res) => {
     newUser
       .save()
       .then((data) => {
-        res.render('signUpLogIn', {
+        res.render('signup-login', {
           signUpMessage: 'The user is signed up. You can log in now.',
           noUserMessage: null,
           wrongPassMessage: null,
@@ -73,14 +73,14 @@ const logIn = async (req, res) => {
       }); // register user token inside the cookie
       res.redirect('/');
     } else {
-      res.render('signUpLogIn', {
+      res.render('signup-login', {
         signUpMessage: null,
         noUserMessage: null,
         wrongPassMessage: 'The password is not correct',
       });
     }
   } else {
-    res.render('signUpLogIn', {
+    res.render('signup-login', {
       signUpMessage: null,
       noUserMessage: 'The user does not exist. Sign up first, please.',
       wrongPassMessage: null,
