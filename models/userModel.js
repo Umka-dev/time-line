@@ -14,15 +14,25 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     minlength: [8, 'Email length should be over than 7 symbols'],
-    maxlength: [30, 'Email length should be less than 30 symbols'],
     required: true,
   },
   password: {
     type: String,
-    minlength: [8, 'Password length should be between 8 and 12 symbols'],
-    maxlength: [12, 'Password length should be between 8 and 12 symbols'],
+    minlength: [4, 'Password length should be be over than 3 symbols'],
     required: true,
   },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'comment',
+    },
+  ],
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'post',
+    },
+  ],
 
   createdAt: {
     type: Date,
