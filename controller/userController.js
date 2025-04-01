@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const renderSignUpPage = (req, res) => {
   res.render('signup-login', {
+    signUpErrMessage: null,
     signUpMessage: null,
     noUserMessage: null,
     wrongPassMessage: null,
@@ -11,16 +12,19 @@ const renderSignUpPage = (req, res) => {
 };
 
 const signUp = async (req, res) => {
-  //check if req.body.email is empty or not!
-
-  // if (req.body.email === '' || req.body.password === '') {
-  //   return res.render('signup-login', {
-  //     signUpErrMessage: 'The email and password should be filled!',
-  //     signUpMessage: null,
-  //     noUserMessage: null,
-  //     wrongPassMessage: null,
-  //   });
-  // }
+  if (
+    req.body.first_name === '' ||
+    req.body.last_name === '' ||
+    req.body.password === '' ||
+    req.body.email === ''
+  ) {
+    return res.render('signup-login', {
+      signUpErrMessage: 'All the fields should be filled!',
+      signUpMessage: null,
+      noUserMessage: null,
+      wrongPassMessage: null,
+    });
+  }
 
   // bcrypt/hash the password
   if (req.body.password !== '') {
@@ -35,7 +39,7 @@ const signUp = async (req, res) => {
       .save()
       .then((data) => {
         res.render('signup-login', {
-          // signUpErrMessage: null,
+          signUpErrMessage: null,
           signUpMessage: 'The user is signed up. You can log in now.',
           noUserMessage: null,
           wrongPassMessage: null,
@@ -75,7 +79,7 @@ const logIn = async (req, res) => {
       res.redirect('/');
     } else {
       res.render('signup-login', {
-        // signUpErrMessage: null,
+        signUpErrMessage: null,
         signUpMessage: null,
         noUserMessage: null,
         wrongPassMessage: 'The password is not correct',
@@ -83,7 +87,7 @@ const logIn = async (req, res) => {
     }
   } else {
     res.render('signup-login', {
-      // signUpErrMessage: null,
+      signUpErrMessage: null,
       signUpMessage: null,
       noUserMessage: 'The user does not exist. Sign up first, please.',
       wrongPassMessage: null,
