@@ -16,9 +16,10 @@ const isSignUpLoginAnable = (req, res, next) => {
   if (!token) {
     next();
   } else {
-    res.redirect('/');
+    res.redirect('/user');
   }
 };
+
 module.exports = {
   isLoggedIn,
   isSignUpLoginAnable,
