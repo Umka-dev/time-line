@@ -63,7 +63,6 @@ const logIn = async (req, res) => {
       existedUser.password
     );
     if (isCorrectPass) {
-      //   console.log(existedUser);
       // User is allow to log in to the website
       // User is allow to go to the dashboard/home page
       // AUTH
@@ -74,9 +73,17 @@ const logIn = async (req, res) => {
       );
       // How to make the token works?
       // Send the token to our req/res => use cookie parser
-      //   console.log(userToken);
-      res.cookie('authToken', userToken, {}); // register user token inside the cookie
-      res.redirect('/');
+      res.cookie('authToken', userToken); // register user token inside the cookie
+
+      // Add user info to the browser cookie
+      const userInfo = {
+        id: existedUser._id,
+        first_name: existedUser.first_name,
+        last_name: existedUser.last_name,
+      };
+      res.cookie('userInfo', JSON.stringify(userInfo)); // Convert object to string
+
+      res.redirect('/user'); // to user page
     } else {
       res.render('signup-login', {
         signUpErrMessage: null,
@@ -95,13 +102,21 @@ const logIn = async (req, res) => {
   }
 };
 
+// Get user data by token
+const userPage = (req, res) => {
+  console.log('User page loaded');
+  const userInfo = JSON.parse(req.cookies.userInfo);
+  res.render('user-page', { userInfo });
+};
+
 // Delete user
 
 // Update user
 
 const logOut = (req, res) => {
   res.clearCookie('authToken');
+  res.clearCookie('userInfo');
   res.redirect('/');
 };
 
-module.exports = { signUp, renderSignUpPage, logIn, logOut };
+module.exports = { signUp, renderSignUpPage, logIn, logOut, userPage };
