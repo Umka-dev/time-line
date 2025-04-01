@@ -15,6 +15,7 @@
           class="link-dark link-offset-2 link-underline link-underline-opacity-0"
           ><h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1></a
         >
+
         <form action="/logout" method="GET">
           <button class="btn btn-dark">Logout</button>
         </form>
@@ -22,11 +23,6 @@
     </header>
     <!-- Main content section -->
     <main class="container flex-grow-1">
-      <div class="d-flex flex-column align-items-center">
-        <!-- Create a new post form -->
-        <%- include('./partials/addPostForm') %>
-      </div>
-
       <!-- Display posts -->
       <div>
         <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
@@ -59,7 +55,9 @@
 
         <!-- Add a comment form -->
         <%- include('./partials/addCommentForm', {post: post}) %> <% }) %> <% }
-        %>
+        else{ %>
+        <p class="ms-4 me-4 mb-3">Here is no any posts so far...</p>
+        <% } %>
       </div>
     </main>
 
