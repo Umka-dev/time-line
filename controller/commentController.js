@@ -1,15 +1,22 @@
 const postModel = require('../models/postModel');
 const commentModel = require('../models/commentModel');
+const userModel = require('../models/userModel');
 
 const addComment = (req, res) => {
-  let postId = req.params.postId;
+  const postId = req.params.postId;
+  const userInfo = JSON.parse(req.cookies.userInfo);
+
+  if (!userInfo) {
+    res.redirect('/user/signup-login');
+  }
   if (req.body.comment !== '' && postId) {
-    let commentData = {
+    const commentData = {
       ...req.body,
       post: postId,
+      user: userInfo.id,
     };
 
-    let newComment = new commentModel(commentData);
+    const newComment = new commentModel(commentData);
 
     newComment
       .save()
@@ -22,23 +29,39 @@ const addComment = (req, res) => {
 
             postInfo
               .save()
+              // update user table to add the comment ids
               .then(() => {
-                res.redirect('/');
-              })
-              .catch((err) => {
-                console.log(err);
+                userModel
+                  .findById(userInfo.id)
+                  .populate('posts')
+                  .populate('comments')
+                  .then((userData) => {
+                    userData.comments.push(newComment._id);
+
+                    userData
+                      .save()
+                      .then(() => {
+                        res.redirect('/');
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  });
               });
           })
           .catch((err) => {
             console.log(err);
           });
       })
+
       .catch((err) => {
+        console.log('err.errors', err);
         if (err && err.errors.comment.kind === 'minlength') {
           postModel
             .find()
             .sort({ createdAt: -1 })
-            .populate('comments', '_id comment')
+            .populate('comments')
+            .populate('user')
             .then((posts) => {
               let errorMessages = {};
               errorMessages[postId] = err.errors.comment.properties.message;

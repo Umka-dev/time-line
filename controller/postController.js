@@ -1,11 +1,16 @@
 const postModel = require('../models/postModel');
 const commentModel = require('../models/commentModel');
+const userModel = require('../models/userModel');
 
 const homePage = (req, res) => {
   postModel
     .find()
     .sort({ createdAt: -1 })
-    .populate('comments', '_id comment')
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', select: 'first_name last_name' },
+    })
+    .populate('user', 'first_name last_name')
     .then((posts) => {
       res.render('homepage', {
         postList: posts,
@@ -22,7 +27,11 @@ const homePage = (req, res) => {
 const getPost = (req, res) => {
   postModel
     .findById(req.params.postId)
-    .populate('comments')
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', select: 'first_name last_name' },
+    })
+    .populate('user', 'first_name last_name')
     .then((post) => {
       if (!post) {
         return res.status(404).render('404page');
@@ -45,19 +54,39 @@ const addNewPost = (req, res) => {
     res.redirect('/user/signup-login');
   }
   const newPost = new postModel({ ...req.body, user: userInfo.id });
+
   newPost
     .save()
     .then(() => {
-      res.redirect('/');
+      // update user table to add the post ids
+      userModel
+        .findById(userInfo.id)
+        .populate('posts')
+        .populate('comments')
+        .then((userData) => {
+          userData.posts.push(newPost._id);
+
+          userData
+            .save()
+            .then(() => {
+              res.redirect('/');
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
     })
     .catch((err) => {
       if (err && err.errors.message.kind === 'minlength') {
         postModel
           .find()
           .sort({ createdAt: -1 })
-          .populate('comments', '_id comment')
+          .populate('comments')
+          .populate('user')
           .then((posts) => {
             res.render('homepage', {
+              userName: userData.first_name,
+              userLastName: userData.last_name,
               postList: posts,
               errPostLength: err.errors.message,
               errCommentLength: null,
