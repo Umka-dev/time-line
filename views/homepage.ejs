@@ -15,25 +15,44 @@
           class="link-dark link-offset-2 link-underline link-underline-opacity-0"
           ><h1 class="fs-3 fw-bold mt-4 mb-4">Timeline</h1></a
         >
+        <div class="d-flex flex-row align-items-center">
+          <a
+            href="/user"
+            class="link-dark link-offset-2 link-underline link-underline-opacity-0 me-4"
+            ><h5 class="fs-5 fw-bold mt-4 mb-4">User page</h5></a
+          >
 
-        <form action="/logout" method="GET">
-          <button class="btn btn-dark">Logout</button>
-        </form>
+          <form action="/logout" method="GET">
+            <button class="btn btn-dark">Logout</button>
+          </form>
+        </div>
       </nav>
     </header>
     <!-- Main content section -->
     <main class="container flex-grow-1">
+      <div class="d-flex flex-column align-items-center">
+        <!-- Create a new post form -->
+        <%- include('./partials/addPostForm') %>
+      </div>
       <!-- Display posts -->
       <div>
         <% if(postList.length > 0){ %> <% postList.forEach(post=>{ %>
-        <a
-          href="/post/<%= post._id %>"
-          class="link-dark link-offset-2 link-underline link-underline-opacity-0"
-          ><h2 class="fs-5 mb-2">
-            <span class="fw-bold"> <%= post.name %></span> -
-            <span class="text-body-secondary fw-light"
-              ><%= new Date(post.createdAt).toLocaleDateString() %></span
-            >
+          <a
+        href="/post/<%= post._id %>"
+        class="link-dark link-offset-2 link-underline link-underline-opacity-0"
+      >
+        <h2 class="fs-5 mb-2">
+          <% if (post.user) { %>
+            <span><%= post.user.first_name %> <%= post.user.last_name %></span>
+          <% } else { %>
+            <span>Deleted user</span>
+          <% } %>
+          -
+          <span class="text-body-secondary fw-light">
+            <%= new Date(post.createdAt).toLocaleDateString() %>
+          </span>
+        </h2>
+      </a>
           </h2></a
         >
         <div class="d-flex flex-row justify-content-between">
