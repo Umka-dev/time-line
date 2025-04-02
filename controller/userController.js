@@ -82,9 +82,7 @@ const logIn = async (req, res) => {
         last_name: existedUser.last_name,
       };
       res.cookie('userInfo', JSON.stringify(userInfo)); // Convert object to string
-
-      res.redirect('/user'); // to user page
-    } else {
+      res.redirect('/');
       res.render('signup-login', {
         signUpErrMessage: null,
         signUpMessage: null,
@@ -102,7 +100,7 @@ const logIn = async (req, res) => {
   }
 };
 
-// Get user data by token
+// Get user data from the cookies
 const userPage = (req, res) => {
   console.log('User page loaded');
   const userInfo = JSON.parse(req.cookies.userInfo);
