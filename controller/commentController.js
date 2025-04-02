@@ -7,7 +7,7 @@ const addComment = (req, res) => {
   const userInfo = JSON.parse(req.cookies.userInfo);
 
   if (!userInfo) {
-    res.redirect('/user/signup-login');
+    return res.redirect('/user/signup-login');
   }
   if (req.body.comment !== '' && postId) {
     const commentData = {
@@ -55,7 +55,6 @@ const addComment = (req, res) => {
       })
 
       .catch((err) => {
-        console.log('err.errors', err);
         if (err && err.errors.comment.kind === 'minlength') {
           postModel
             .find()

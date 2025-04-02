@@ -18,12 +18,18 @@
       <!-- Display posts -->
       <div>
         <% if(post){ %>
+
         <h2 class="fs-5 mb-2">
-          <span class="fw-bold"> <%= post.name %></span> -
-          <span class="text-body-secondary fw-light"
-            ><%= new Date(post.createdAt).toLocaleDateString() %></span
-          >
+          <% if (post.user) { %>
+          <span><%= post.user.first_name %> <%= post.user.last_name %></span>
+          <% } else { %>
+          <span>Deleted user</span>
+          <% } %> -
+          <span class="text-body-secondary fw-light">
+            <%= new Date(post.createdAt).toLocaleDateString() %>
+          </span>
         </h2>
+
         <div class="d-flex flex-row justify-content-between">
           <p class="ms-4 me-4 mb-3"><%= post.message %></p>
           <!-- Delete button -->

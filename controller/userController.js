@@ -63,16 +63,11 @@ const logIn = async (req, res) => {
       existedUser.password
     );
     if (isCorrectPass) {
-      // User is allow to log in to the website
-      // User is allow to go to the dashboard/home page
-      // AUTH
-      // JWT
       const userToken = await jwt.sign(
         { user: existedUser },
         'User is JWT now'
       );
-      // How to make the token works?
-      // Send the token to our req/res => use cookie parser
+
       res.cookie('authToken', userToken); // register user token inside the cookie
 
       // Add user info to the browser cookie
@@ -82,7 +77,8 @@ const logIn = async (req, res) => {
         last_name: existedUser.last_name,
       };
       res.cookie('userInfo', JSON.stringify(userInfo)); // Convert object to string
-      res.redirect('/');
+      return res.redirect('/');
+    } else {
       res.render('signup-login', {
         signUpErrMessage: null,
         signUpMessage: null,
@@ -102,7 +98,6 @@ const logIn = async (req, res) => {
 
 // Get user data from the cookies
 const userPage = (req, res) => {
-  console.log('User page loaded');
   const userInfo = JSON.parse(req.cookies.userInfo);
   res.render('user-page', { userInfo });
 };

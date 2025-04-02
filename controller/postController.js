@@ -51,7 +51,7 @@ const getPost = (req, res) => {
 const addNewPost = (req, res) => {
   const userInfo = JSON.parse(req.cookies.userInfo);
   if (!userInfo) {
-    res.redirect('/user/signup-login');
+    return res.redirect('/user/signup-login');
   }
   const newPost = new postModel({ ...req.body, user: userInfo.id });
 
@@ -69,7 +69,7 @@ const addNewPost = (req, res) => {
           userData
             .save()
             .then(() => {
-              res.redirect('/');
+              return res.redirect('/');
             })
             .catch((err) => {
               console.log(err);
@@ -84,9 +84,7 @@ const addNewPost = (req, res) => {
           .populate('comments')
           .populate('user')
           .then((posts) => {
-            res.render('homepage', {
-              userName: userData.first_name,
-              userLastName: userData.last_name,
+            return res.render('homepage', {
               postList: posts,
               errPostLength: err.errors.message,
               errCommentLength: null,
