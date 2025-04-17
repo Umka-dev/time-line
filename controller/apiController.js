@@ -1,5 +1,19 @@
 const postModel = require('../models/postModel');
+const userModel = require('../models/userModel');
 const commentModel = require('../models/commentModel');
+
+//--------Operations with users-------- //
+const getAllUsers = (req, res) => {
+  userModel
+    .find()
+    .populate('posts')
+    .then((users) => {
+      res.status(200).json({ users: users });
+    })
+    .catch((err) => {
+      res.status(400).json({ error: { message: 'Error fetching the data' } });
+    });
+};
 
 //--------Operations with posts-------- //
 // GET a post by ID
@@ -168,6 +182,7 @@ const deleteComment = (req, res) => {
 };
 
 module.exports = {
+  getAllUsers,
   getPost,
   getAllPosts,
   addNewPost,

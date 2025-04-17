@@ -2,6 +2,9 @@ const express = require('express');
 const route = express.Router();
 const apiController = require('../controller/apiController');
 
+// User routs
+route.get('/users', apiController.getAllUsers);
+
 // Post routs
 route.get('/posts', apiController.getAllPosts);
 route.post('/post', apiController.addNewPost);
