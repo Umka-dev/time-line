@@ -29,7 +29,7 @@
       <% if (comment.user) { %>
       <span><%= comment.user.first_name %> <%= comment.user.last_name %></span>
       <% } else { %>
-      <span>Deleted user</span> <% } %> -
+      <span>Unknown user</span> <% } %> -
       <span class="text-body-secondary fw-light"
         ><%= new Date(comment.createdAt).toLocaleDateString() %></span
       >
