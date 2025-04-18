@@ -46,13 +46,32 @@ const getAllPosts = (req, res) => {
 };
 
 // POST a new post
+// const addNewPost = (req, res) => {
+//   const newPost = new postModel(req.body);
+//   newPost
+//     .save()
+//     .then((savedPost) => res.status(201).json(savedPost))
+//     .catch((err) => {
+//       res.status(400).json({ error: err });
+//     });
+// };
+
 const addNewPost = (req, res) => {
   const newPost = new postModel(req.body);
+
   newPost
     .save()
-    .then((savedPost) => res.status(201).json(savedPost))
+    .then((savedPost) => {
+      return userModel
+        .findByIdAndUpdate(
+          savedPost.user,
+          { $push: { posts: savedPost._id } }, // Add new post ID to user entity for the relationship
+          { new: true }
+        )
+        .then(() => res.status(201).json(savedPost));
+    })
     .catch((err) => {
-      res.status(400).json({ error: err });
+      res.status(400).json({ error: err.message || err });
     });
 };
 
